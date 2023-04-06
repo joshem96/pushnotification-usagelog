@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Iframe</title>
+    <script id="jotform-api-script" src="https://js.jotform.com/JotForm.js"></script>
+    <style>
+        body{
+            background: #1E1E1E;
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- init script below -->
+    <script id="jotform-api-script" src="https://js.jotform.com/JotForm.js"></script>
+    <script id="jotform-api-init" defer>
+        JF.initialize( {apiKey: "4889f4992570fdf8bec164429d63b190"} ); 
+
+        var jotformApiScript = document.querySelector('#jotform-api-script');
+        var jotformApiInit = document.querySelector('#jotform-api-init');
+
+        //initialise the script
+        // function initScript(API){
+        //     API.initialize( {apiKey: "4889f4992570fdf8bec164429d63b190"} ); 
+        // }
+        // initScript();
+    </script>
+
+    <!-- HTML -->
+    <div class='log-wrap'>
+        <pre class="log-info"></pre>
+    </div>
+
+    <!--  DOM SCRIPT -->
+    <script>
+        var infoLogText = document.querySelector('.log-info');
+
+
+        //....................................
+
+        function logUserInfo(){
+
+            //NOTE: for whatever reason, to get a fresh usage log the jotform API script needs to be reinserted on the page.
+            //otherwise window.JF.getUsage will spit out the same response as when the script was first ran
+
+            //deletePreviousAPIScript(jotformApiScript); //delete previous jotform script
+
+                // !note! this is currently not working, seems to be a bug
+            //reinjectAPIScript(jotformApiScript); //reinject previous jotform script
+
+            //initScript(window.JF); //initialise jotform script
+
+            //inject log onto the page
+            window.JF.getUsage(function(response){
+                //console.log(response);
+                infoLogText.innerHTML = JSON.stringify(response,null,2)
+                //onsole.log(JSON.stringify(response,null,2))
+            });
+
+        }
+        setTimeout( () => logUserInfo() );
+
+
+    </script>
+</body>
+</html>
